@@ -30,7 +30,7 @@ const generateSunspots = (size) => {
   return spots;
 };
 
-const Sun = ({ colors, size }) => {
+const Sun = () => {
   const opacity = useSharedValue(0.3);
 
   useEffect(() => {
@@ -42,16 +42,16 @@ const Sun = ({ colors, size }) => {
   }, [opacity]);
 
   const animatedOpacity = useDerivedValue(() => opacity.value);
-  const sunspots = generateSunspots(size);
+  const sunspots = generateSunspots(100);
 
   return (
     <Canvas style={{ width, height }}>
       <Group>
-        <Circle cx={width / 2} cy={height / 2} r={size}>
+        <Circle cx={width / 2} cy={height / 2} r={100}>
           <LinearGradient
-            start={vec(width / 2 - size, height / 2)}
-            end={vec(width / 2 + size, height / 2)}
-            colors={colors}
+            start={vec(width / 2 - 100, height / 2)}
+            end={vec(width / 2 + 100, height / 2)}
+            colors={['#FFA500', '#FF4500']}
           />
         </Circle>
 
