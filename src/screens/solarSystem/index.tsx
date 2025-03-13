@@ -2,10 +2,12 @@ import React from 'react';
 import {FlatList, View} from 'react-native';
 import Sun from '../../components/Sun';
 import Mercury from '../../components/Mercury';
+import Venus from '../../components/Venus';
 
 const planets = [
   {name: 'Sun', component: <Sun />},
   {name: 'Mercury', component: <Mercury />},
+  {name: 'Venus', component: <Venus />},
 ];
 
 const SolarSystem = () => {
