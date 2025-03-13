@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import {Dimensions} from 'react-native';
 import {
   Canvas,
@@ -15,11 +15,12 @@ import {
   withRepeat,
   withTiming,
   Easing,
+  runOnJS,
 } from 'react-native-reanimated';
 
 const {height, width} = Dimensions.get('window');
 
-// Aqui para Definir as manchas atmosféricas de Vênus
+// Função para gerar as nuvens de Vênus
 const createVenusClouds = (cx: number, cy: number, r: number) => {
   const path = Skia.Path.Make();
   path.moveTo(cx - r * 0.1, cy - r * 0.5);
@@ -45,6 +46,30 @@ const createVenusClouds = (cx: number, cy: number, r: number) => {
 
 const Venus = () => {
   const cloudOpacity = useSharedValue(0.2);
+  const ringRadius = useSharedValue(50);
+  const ringOpacity = useSharedValue(0.5);
+
+  const animateRing = useCallback(() => {
+    ringRadius.value = 50;
+    ringOpacity.value = 0.5;
+
+    ringRadius.value = withTiming(40, {
+      duration: 2000,
+      easing: Easing.out(Easing.ease),
+    });
+
+    ringOpacity.value = withTiming(
+      0,
+      {duration: 2000, easing: Easing.out(Easing.ease)},
+      () => {
+        runOnJS(animateRing)();
+      },
+    );
+  }, [ringOpacity, ringRadius]);
+
+  useEffect(() => {
+    animateRing();
+  }, [animateRing]);
 
   useEffect(() => {
     cloudOpacity.value = withRepeat(
@@ -55,6 +80,8 @@ const Venus = () => {
   }, [cloudOpacity]);
 
   const animatedCloudOpacity = useDerivedValue(() => cloudOpacity.value);
+  const animatedRingRadius = useDerivedValue(() => ringRadius.value);
+  const animatedRingOpacity = useDerivedValue(() => ringOpacity.value);
 
   return (
     <Canvas style={{width, height}}>
@@ -66,6 +93,17 @@ const Venus = () => {
             colors={['#E1A95F', '#D4A017', '#B8860B']}
           />
         </Circle>
+
+        {/* Anel de calor entrando */}
+        <Circle
+          cx={width / 2}
+          cy={height / 2}
+          r={animatedRingRadius}
+          color="rgba(255, 100, 0, 1)"
+          opacity={animatedRingOpacity}
+          strokeWidth={5}
+          style="stroke"
+        />
 
         <Path
           path={createVenusClouds(width / 2, height / 2, 60)}
