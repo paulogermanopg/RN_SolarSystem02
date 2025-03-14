@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Dimensions } from 'react-native';
-import { Canvas, Circle, Group, LinearGradient, vec, Path } from '@shopify/react-native-skia';
+import { Canvas, Circle, Group, LinearGradient, vec } from '@shopify/react-native-skia';
 import { useSharedValue, useDerivedValue, withRepeat, withTiming, Easing } from 'react-native-reanimated';
 
 const { height, width } = Dimensions.get('window');
@@ -21,7 +21,7 @@ const Earth = () => {
   const moonX = useDerivedValue(() => width / 2 + 80 * Math.cos(moonOrbit.value));
   const moonY = useDerivedValue(() => height / 2 + 80 * Math.sin(moonOrbit.value));
 
-  // Crateras hookvalues
+  //Crateras hookvalues
   const craterXOne = useDerivedValue(() =>
     moonX.value + 6 * Math.cos(moonOrbit.value + 5.3)
   );
@@ -60,22 +60,6 @@ const Earth = () => {
             colors={['#1E90FF', '#00008B']}
           />
         </Circle>
-
-        {/* Continente Verde */}
-        <Path
-          path={`M ${width / 2 - 10} ${height / 2 - 5} 
-                 Q ${width / 2 - 35} ${height / 2 + 10}, ${width / 2 - 10} ${height / 2 + 35} 
-                 Q ${width / 2 - 5} ${height / 2 + 70}, ${width / 2 + 15} ${height / 2 + 10}`}
-          color="#228B22"
-        />
-
-        {/* Polo Norte Branco */}
-        <Path
-          path={`M ${width / 2 - 20} ${height / 2 - 40} 
-                 Q ${width / 2} ${height / 2 - 50}, ${width / 2 + 20} ${height / 2 - 40} 
-                 Q ${width / 2 + 5} ${height / 2 - 35}, ${width / 2 - 5} ${height / 2 - 35}`}
-          color="#FFFFFF"
-        />
 
         {/* Lua e crateras */}
         <Group>
