@@ -3,11 +3,13 @@ import {FlatList, View} from 'react-native';
 import Sun from '../../components/Sun';
 import Mercury from '../../components/Mercury';
 import Venus from '../../components/Venus';
+import Earth from '../../components/Earth';
 
 const planets = [
   {name: 'Sun', component: <Sun />},
   {name: 'Mercury', component: <Mercury />},
   {name: 'Venus', component: <Venus />},
+  {name: 'Earth', component: <Earth />},
 ];
 
 const SolarSystem = () => {
