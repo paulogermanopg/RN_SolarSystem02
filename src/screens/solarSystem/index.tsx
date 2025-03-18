@@ -5,6 +5,7 @@ import Mercury from '../../components/Mercury';
 import Venus from '../../components/Venus';
 import Earth from '../../components/Earth';
 import Mars from '../../components/Mars';
+import Jupiter from '../../components/Jupiter';
 
 const planets = [
   {name: 'Sun', component: <Sun />},
@@ -12,6 +13,7 @@ const planets = [
   {name: 'Venus', component: <Venus />},
   {name: 'Earth', component: <Earth />},
   {name: 'Mars', component: <Mars />},
+  {name: 'Jupiter', component: <Jupiter />},
 ];
 
 const SolarSystem = () => {
