@@ -1,17 +1,30 @@
-import React, { useEffect } from 'react';
-import { Dimensions } from 'react-native';
-import { Canvas, Circle, Group, LinearGradient, vec, Path } from '@shopify/react-native-skia';
-import { useSharedValue, useDerivedValue, withRepeat, withTiming, Easing } from 'react-native-reanimated';
+import React, {useEffect} from 'react';
+import {Dimensions} from 'react-native';
+import {
+  Canvas,
+  Circle,
+  Group,
+  LinearGradient,
+  vec,
+  Path,
+} from '@shopify/react-native-skia';
+import {
+  useSharedValue,
+  withRepeat,
+  withTiming,
+  Easing,
+  useDerivedValue,
+} from 'react-native-reanimated';
 
-const { height, width } = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 
 const Jupiter = () => {
-  // Animação da Grande Mancha Vermelha
-  const stormX = useSharedValue(width / 2 + 10);
+  // Valor animado para a tempestade
+  const stormX = useSharedValue(width / 2 + 40);
 
   useEffect(() => {
     stormX.value = withRepeat(
-      withTiming(width / 2 + 15, {
+      withTiming(width / 2 + 30, {
         duration: 3000,
         easing: Easing.linear,
       }),
@@ -20,12 +33,12 @@ const Jupiter = () => {
     );
   }, [stormX]);
 
-  const animatedStormX = useDerivedValue(() => stormX.value);
+  // Computa a posição animada da tempestade
+  const animatedStormX = useDerivedValue(() => stormX.value, [stormX]);
 
   return (
-    <Canvas style={{ width, height }}>
+    <Canvas style={{width, height}}>
       <Group>
-        {/* Planeta Júpiter */}
         <Circle cx={width / 2} cy={height / 2} r={90}>
           <LinearGradient
             start={vec(width / 2 - 90, height / 2)}
@@ -37,28 +50,39 @@ const Jupiter = () => {
         {/* Faixas atmosféricas */}
         <Path
           path={`
-            M ${width / 2 - 50} ${height / 2 - 30}
-            Q ${width / 2} ${height / 2 - 25}, ${width / 2 + 50} ${height / 2 - 30}
-            T ${width / 2 - 50} ${height / 2 - 30}
+            M ${width / 2 - 70} ${height / 2 - 45}
+            Q ${width / 2} ${height / 2 - 50}, ${width / 2 + 60} ${height / 2 - 40}
+            T ${width / 2 - 50} ${height / 2 - 45}
           `}
           color="#B5835A"
         />
         <Path
           path={`
-            M ${width / 2 - 50} ${height / 2 + 10}
+            M ${width / 2 - 60} ${height / 2 - 30}
+            Q ${width / 2 - 50} ${height / 2 + 10}, ${width / 2 + 50} ${height / 2 - 10}
+            T ${width / 2 - 30} ${height / 2 + 20}
+          `}
+          color="#c78a79"
+        />
+        <Path
+          path={`
+            M ${width / 2 - 70} ${height / 2 + 10}
             Q ${width / 2} ${height / 2 + 15}, ${width / 2 + 50} ${height / 2 + 10}
             T ${width / 2 - 50} ${height / 2 + 10}
           `}
-          color="#B5835A"
+          color="#ddbca6"
         />
 
-        {/* Grande Mancha Vermelha (Path) */}
+        {/* Grande Mancha Vermelha (Agora animada corretamente) */}
         <Path
-          path={`
-            M ${animatedStormX.value - 10} ${height / 2 + 18}
-            Q ${animatedStormX.value} ${height / 2 + 12}, ${animatedStormX.value + 10} ${height / 2 + 18}
-            Q ${animatedStormX.value} ${height / 2 + 24}, ${animatedStormX.value - 10} ${height / 2 + 18}
-          `}
+          path={useDerivedValue(
+            () => `
+            M ${animatedStormX.value - 20} ${height / 2 + 30}
+            Q ${animatedStormX.value} ${height / 2 + 20}, ${animatedStormX.value + 20} ${height / 2 + 30}
+            Q ${animatedStormX.value} ${height / 2 + 40}, ${animatedStormX.value - 20} ${height / 2 + 30}
+          `,
+            [animatedStormX]
+          )}
           color="#D96F4E"
         />
       </Group>
