@@ -35,7 +35,7 @@ const Saturn = () => {
   return (
     <Canvas style={{width, height}}>
       <Group>
-        {/* Anel de trás */}
+        {/* Anel de trás - completamente preenchido */}
         <Path
           path={useDerivedValue(
             () => `
@@ -63,33 +63,13 @@ const Saturn = () => {
           />
         </Circle>
 
-        <Path
-          path={`M ${width / 2 - 60} ${height / 2 - 45}
-                Q ${width / 2} ${height / 2 - 40}, ${width / 2 + 50} ${
-            height / 2 - 40
-          }
-                T ${width / 2 - 50} ${height / 2 - 45}`}
-          color="#c3924f"
-        />
-
-        <Path
-          path={`M ${width / 2 - 60} ${height / 2 - 20}
-                Q ${width / 2} ${height / 2 - 35}, ${width / 2 + 50} ${
-            height / 2 - 40
-          }
-                T ${width / 2 - 50} ${height / 2 - 20}`}
-          color="#c3924f"
-        />
-
         {/* Anel da frente */}
         <Path
           path={useDerivedValue(
             () => `
                 M ${width / 2 - 110} ${height / 2 - 2 + animatedTilt.value}
                 L ${width / 2 + 110} ${height / 2 - 2 + animatedTilt.value}
-                A 110 40 0 1 1 ${width / 2 - 110} ${
-              height / 2 - 2 + animatedTilt.value
-            }
+                A 110 40 0 1 1 ${width / 2 - 110} ${height / 2 - 2 + animatedTilt.value}
                 Z
                     `,
             [animatedTilt],
