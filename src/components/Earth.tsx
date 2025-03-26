@@ -21,7 +21,7 @@ const Earth = () => {
   const moonX = useDerivedValue(() => width / 2 + 80 * Math.cos(moonOrbit.value));
   const moonY = useDerivedValue(() => height / 2 + 80 * Math.sin(moonOrbit.value));
 
-  // Crateras hookvalues
+  // Crateras
   const craterXOne = useDerivedValue(() =>
     moonX.value + 6 * Math.cos(moonOrbit.value + 5.3)
   );
